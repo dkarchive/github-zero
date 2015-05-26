@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSDictionary *actor;
 @property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) NSDictionary *payload;
+@property (nonatomic, strong) NSNumber *public;
 @property (nonatomic, strong) NSDictionary *repo;
 
 @property (nonatomic, strong) NSDictionary *raw;
@@ -46,6 +47,7 @@
     event.actor = dictionary[@"actor"];
     event.createdAt = dictionary[@"created_at"];
     event.payload = dictionary[@"payload"];
+    event.public = dictionary[@"public"];
     event.repo = dictionary[@"repo"];
     event.type = dictionary[@"type"];
     
@@ -250,16 +252,14 @@
 }
 
 - (NSString *)url {
-    //    NSLog(@"event raw: %@", self.raw);
-    //return self.repo[@"url"];
+    if (!self.public.integerValue)
+        return nil;
     
     NSString *htmlUrl = self.payload[@"comment"][@"html_url"];
     if (htmlUrl)
         return htmlUrl;
     
-    NSString *destination =
-    //    self.repo[@"url"];
-    [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
+    NSString *destination = [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
     
     return destination;
 }

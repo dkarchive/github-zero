@@ -366,6 +366,11 @@ NSString *cellId = @"cellId";
     
     NSString *destination = @"repo";
     if ([destination isEqualToString:@"repo"]) {
+        if (!item.url) {
+            NSLog(@"private repo");
+            return;
+        }
+                
         [self showWebControllerWithUrlString:item.url];
         
         if ([item isKindOfClass:[Notification class]]) {
