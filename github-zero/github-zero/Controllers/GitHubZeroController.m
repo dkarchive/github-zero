@@ -22,6 +22,7 @@
 #import "GZDefines.h"
 
 // Libs
+#import "CRToast.h"
 #import "GitHubOAuthController.h"
 #import "GithubZeroKeys.h"
 #import "TOWebViewController.h"
@@ -367,7 +368,18 @@ NSString *cellId = @"cellId";
     NSString *destination = @"repo";
     if ([destination isEqualToString:@"repo"]) {
         if (!item.url) {
-            NSLog(@"private repo");
+            NSDictionary *options = @{
+                                      kCRToastTextKey : @"Private repos are not supported",
+                                      kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
+                                      kCRToastBackgroundColorKey : [UIColor lightGrayColor],
+                                      kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
+                                      kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
+                                      kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionTop),
+                                      kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionTop),
+                                      kCRToastNotificationTypeKey: @(CRToastTypeNavigationBar),
+                                      };
+
+            [CRToastManager showNotificationWithOptions:options completionBlock:nil];
             return;
         }
                 
