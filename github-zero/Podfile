@@ -1,0 +1,18 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+pod 'DKCategories', '~> 0.1'
+pod 'DKDataCache', '~> 0.2'
+pod 'GitHubOAuthController', '~> 0.1'
+pod 'NSStringEmojize','~> 0.2'
+pod 'OcticonsIOS', '~> 0.0.2'
+pod 'SloppySwiper', '~> 0.4.0'
+pod 'TOWebViewController', '~> 2.0'
+
+plugin 'cocoapods-keys', {
+    :project => 'github-zero',
+    :keys => [
+    'GitHubAPIClientID',
+    'GitHubAPIClientSecret'
+    ]
+}

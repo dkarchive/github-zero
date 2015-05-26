@@ -1,0 +1,35 @@
+PODS:
+  - DKCategories (0.1)
+  - DKDataCache (0.2)
+  - GitHubOAuthController (0.1)
+  - Keys (1.0.0)
+  - NSStringEmojize (0.2.0)
+  - OcticonsIOS (0.0.2)
+  - SloppySwiper (0.4.0)
+  - TOWebViewController (2.0.14)
+
+DEPENDENCIES:
+  - DKCategories (~> 0.1)
+  - DKDataCache (~> 0.2)
+  - GitHubOAuthController (~> 0.1)
+  - Keys (from `Pods/CocoaPodsKeys/`)
+  - NSStringEmojize (~> 0.2)
+  - OcticonsIOS (~> 0.0.2)
+  - SloppySwiper (~> 0.4.0)
+  - TOWebViewController (~> 2.0)
+
+EXTERNAL SOURCES:
+  Keys:
+    :path: Pods/CocoaPodsKeys/
+
+SPEC CHECKSUMS:
+  DKCategories: 4d061e3e1fa53776fdf4f9a754320678055f2286
+  DKDataCache: 9741cef8ba45f25d186734f15bb13949d1c1d274
+  GitHubOAuthController: 6d147f984e1ce5863b522ee3fb7a453468102974
+  Keys: 7d2ff6ff42f6903358267ce56e9392f83c31acfe
+  NSStringEmojize: bd60199a25d745365b393fb95a2c6471bb9a2e99
+  OcticonsIOS: 845ce2794c2837cf688049c4782467ef0c3c949d
+  SloppySwiper: 5325a412ecd80eefa171f5544b07539a891b1c32
+  TOWebViewController: 2cfd0032d781cabd88a0995fbca9692c11f0797e
+
+COCOAPODS: 0.37.1
