@@ -22,10 +22,10 @@
 #import "GZDefines.h"
 
 // Libs
-#import "CRToast.h"
 #import "GitHubOAuthController.h"
 #import "GithubZeroKeys.h"
 #import "TOWebViewController.h"
+#import "TSMessage.h"
 
 // Models
 #import "Event.h"
@@ -369,20 +369,9 @@ NSString *cellId = @"cellId";
     NSString *destination = @"repo";
     if ([destination isEqualToString:@"repo"]) {
         if (!item.url) {
-            NSDictionary *options = @{
-                                      kCRToastTextKey : @"Private repos are not supported",
-                                      kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
-                                      kCRToastBackgroundColorKey : [UIColor lightGrayColor],
-                                      kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
-                                      kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
-                                      kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionTop),
-                                      kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionTop),
-                                      kCRToastNotificationTypeKey: @(CRToastTypeNavigationBar),
-                                      };
-
-            if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
-                [CRToastManager showNotificationWithOptions:options completionBlock:nil];
-            }
+            [TSMessage showNotificationWithTitle:@"Private repos are not supported."
+                                        subtitle:nil
+                                            type:TSMessageNotificationTypeMessage];
             return;
         }
                 
