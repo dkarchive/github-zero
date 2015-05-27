@@ -25,6 +25,7 @@
 #import "TOWebViewController.h"
 
 @interface TrendingCell : UITableViewCell
+@property (nonatomic, strong) UILabel *repoLabel;
 @property (nonatomic, strong) UIButton *button;
 @end
 
@@ -38,14 +39,16 @@
     
     //init
     self.button = [[UIButton alloc] init];
+    self.repoLabel = [[UILabel alloc] init];
     
     //content
+    [self.contentView addSubview:self.repoLabel];
     [self.contentView addSubview:self.button];
     
     //setup
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    self.textLabel.font = [UIFont fontWithName:gzFont size:14];
+    self.repoLabel.font = [UIFont fontWithName:gzFont size:14];
     
     [self.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     self.button.titleLabel.font = [UIFont fontWithName:gzFont size:10];
@@ -63,6 +66,11 @@
     CGFloat height = self.bounds.size.height;
     CGRect frame = CGRectMake(self.bounds.size.width-width, 0, width, height);
     self.button.frame = frame;
+    
+    frame.size.width = frame.origin.x;
+    frame.origin.x = 16;
+    frame.size.width -= frame.origin.x;
+    self.repoLabel.frame = frame;
 }
 
 @end
@@ -114,7 +122,7 @@ NSString *repoData = @"repoData";
     }
     
     Repository *repo = self.dataSource[indexPath.row];
-    cell.textLabel.text = repo.name;
+    cell.repoLabel.text = repo.name;
     [cell.button setTitle:repo.stars.stringValue forState:UIControlStateNormal];
     
     return cell;
