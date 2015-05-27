@@ -380,7 +380,9 @@ NSString *cellId = @"cellId";
                                       kCRToastNotificationTypeKey: @(CRToastTypeNavigationBar),
                                       };
 
-            [CRToastManager showNotificationWithOptions:options completionBlock:nil];
+            if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+                [CRToastManager showNotificationWithOptions:options completionBlock:nil];
+            }
             return;
         }
                 
