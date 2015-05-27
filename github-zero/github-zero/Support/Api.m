@@ -11,15 +11,17 @@
 // Models
 #import "Event.h"
 #import "Notification.h"
+#import "Repository.h"
 
 @interface Api ()
 @property (nonatomic, strong) NSString *token;
 @end
 
 NSString *api_url_base = @"https://api.github.com";
-NSString *api_url_notifications = @"https://api.github.com/notifications";
-NSString *gzUsernamePlaceholder = @"gzUsernamePlaceholder";
 NSString *api_url_events = @"https://api.github.com/users/gzUsernamePlaceholder/received_events";
+NSString *api_url_notifications = @"https://api.github.com/notifications";
+NSString *api_url_notificationsUsernamePlaceholder = @"gzUsernamePlaceholder";
+NSString *api_url_search = @"https://api.github.com/search";
 NSString *api_url_user = @"https://api.github.com/user";
 
 @implementation Api
@@ -40,7 +42,7 @@ NSString *api_url_user = @"https://api.github.com/user";
 
 
 - (void)getEventsForUsername:(NSString *)username page:(NSInteger)page success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
-    NSString *urlEvents = [api_url_events stringByReplacingOccurrencesOfString:gzUsernamePlaceholder withString:username];
+    NSString *urlEvents = [api_url_events stringByReplacingOccurrencesOfString:api_url_notificationsUsernamePlaceholder withString:username];
     urlEvents = [urlEvents stringByAppendingFormat:@"?page=%@", @(page)];
     
     [self sendAsynchronousRequestWithUrlString:urlEvents success:^(id response) {
@@ -75,6 +77,18 @@ NSString *api_url_user = @"https://api.github.com/user";
     } failure:failure];
 }
 
+- (void)getReposWithSearch:(NSString *)search success:(void (^)(NSArray *repos))success failure:(void (^)(NSError *error))failure {
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", api_url_search, search];
+    
+    [self sendAsynchronousRequestWithUrlString:urlString success:^(id response) {
+        NSArray *repos = [Repository newRepositoriesFromResponse:response];
+        if (success) {
+            success(repos);
+        }
+    } failure:failure];
+}
+
 - (void)getUserWithSuccess:(void (^)(NSString *, NSDictionary *))success failure:(void (^)(NSError *))failure {
     [self sendAsynchronousRequestWithUrlString:api_url_user success:^(id response) {
         if (success) {
@@ -101,7 +115,7 @@ NSString *api_url_user = @"https://api.github.com/user";
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         
-//        NSLog(@"mark notification as read.. status code: %@", @(httpResponse.statusCode));
+        //        NSLog(@"mark notification as read.. status code: %@", @(httpResponse.statusCode));
         
         if (httpResponse.statusCode==205) {
             if (success) {
@@ -142,13 +156,20 @@ NSString *api_url_user = @"https://api.github.com/user";
 //}
 
 - (void)sendAsynchronousRequestWithUrlString:(NSString *)urlString success:(void(^)(id response))success failure:(void(^)(NSError *error))failure {
-    NSString *urlWithToken;
-    if ([urlString containsString:@"?"])
-        urlWithToken = [NSString stringWithFormat:@"%@&access_token=%@", urlString, self.token];
-    else
-        urlWithToken = [NSString stringWithFormat:@"%@?access_token=%@", urlString, self.token];
-    //    NSLog(@"api send async url = %@", urlWithToken);
-    NSURL *URL = [NSURL URLWithString:urlWithToken];
+    NSURL *URL = (self.token) ?
+    ({
+        NSString *symbol = ([urlString containsString:@"?"])?@"&":@"?";
+        NSString *urlWithToken = [NSString stringWithFormat:@"%@%@access_token=%@", urlString,
+                                  symbol,
+                                  self.token
+                                  ];
+        [NSURL URLWithString:urlWithToken];
+    })
+    :
+    ({
+        [NSURL URLWithString:urlString];
+    });
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(200, 99)];

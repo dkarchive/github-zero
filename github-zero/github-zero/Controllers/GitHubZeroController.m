@@ -17,6 +17,7 @@
 
 // Controllers
 #import "RepoController.h"
+#import "TrendingController.h"
 
 // Defines
 #import "GZDefines.h"
@@ -79,6 +80,7 @@ NS_ENUM(NSInteger, GZSectionType) {
     self.events  = [[NSArray alloc] init];
     self.headerView = [[UIView alloc] init];
     UIButton *githubButton = [[UIButton alloc] init];
+    UIBarButtonItem *trendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Trending" style:UIBarButtonItemStylePlain target:self action:@selector(actionTrending)];
     self.dataSource = @[
                         self.notifications,
                         self.events,
@@ -88,6 +90,7 @@ NS_ENUM(NSInteger, GZSectionType) {
     [self.view addSubview:self.activityIndicator];
     [self addAndAnimateHeaderView];
     [self.headerView addSubview:githubButton];
+    self.navigationItem.leftBarButtonItem = trendingButton;
     
     self.page = 1;
     
@@ -127,6 +130,8 @@ NS_ENUM(NSInteger, GZSectionType) {
     }
     else {
         self.navigationItem.rightBarButtonItem = self.signinButton;
+        
+        [self actionTrending];
     }
 }
 
@@ -186,6 +191,11 @@ NS_ENUM(NSInteger, GZSectionType) {
 - (void)actionSignout {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:gz_signoutText otherButtonTitles: nil];
     [sheet showInView:self.view];
+}
+
+- (void)actionTrending {
+    TrendingController *trendController = [[TrendingController alloc] init];
+    [self.navigationController pushViewController:trendController animated:YES];
 }
 
 - (void)addAndAnimateHeaderView {

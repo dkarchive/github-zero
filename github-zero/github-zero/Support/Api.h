@@ -22,6 +22,8 @@
 
 - (void)getNotificationsWithSuccess:(void (^)(NSArray *notifications))success failure:(void (^)(NSError *error))failure;
 
+- (void)getReposWithSearch:(NSString *)search success:(void (^)(NSArray *repos))success failure:(void (^)(NSError *error))failure;
+
 - (void)getUserWithSuccess:(void (^)(NSString *username, NSDictionary *raw))success failure:(void (^)(NSError *error))failure;
 
 - (void)markNotificationAsReadWithThreadsUrl:(NSString *)threads success:(void (^)(BOOL status))success failure:(void (^)(NSError *error))failure;

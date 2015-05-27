@@ -17,6 +17,8 @@
 		CE7A0D621ADC1782007EB94F /* GZCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A0D611ADC1782007EB94F /* GZCell.m */; };
 		CE7A0D651ADC1C36007EB94F /* NSDateFormatter+DK.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A0D641ADC1C36007EB94F /* NSDateFormatter+DK.m */; };
 		CE7A0D681ADC1D68007EB94F /* UIColor+DK.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7A0D671ADC1D68007EB94F /* UIColor+DK.m */; };
+		CE838D661B1637640011385B /* TrendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE838D651B1637640011385B /* TrendingController.m */; };
+		CE838D691B163D0A0011385B /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = CE838D681B163D0A0011385B /* Repository.m */; };
 		CECE1D521ACEDB880015A2C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE1D511ACEDB880015A2C7 /* main.m */; };
 		CECE1D5D1ACEDB880015A2C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CECE1D5C1ACEDB880015A2C7 /* Images.xcassets */; };
 		CECE1D6C1ACEDB880015A2C7 /* github_zeroTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE1D6B1ACEDB880015A2C7 /* github_zeroTests.m */; };
@@ -60,6 +62,10 @@
 		CE7A0D641ADC1C36007EB94F /* NSDateFormatter+DK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DK.m"; sourceTree = "<group>"; };
 		CE7A0D661ADC1D68007EB94F /* UIColor+DK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DK.h"; sourceTree = "<group>"; };
 		CE7A0D671ADC1D68007EB94F /* UIColor+DK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DK.m"; sourceTree = "<group>"; };
+		CE838D641B1637640011385B /* TrendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingController.h; sourceTree = "<group>"; };
+		CE838D651B1637640011385B /* TrendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingController.m; sourceTree = "<group>"; };
+		CE838D671B163D0A0011385B /* Repository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Repository.h; sourceTree = "<group>"; };
+		CE838D681B163D0A0011385B /* Repository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Repository.m; sourceTree = "<group>"; };
 		CECE1D4C1ACEDB880015A2C7 /* github-zero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "github-zero.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECE1D501ACEDB880015A2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CECE1D511ACEDB880015A2C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -118,6 +124,8 @@
 				CE1E9AE21AD32421008BFE0A /* GitHubZeroController.m */,
 				CED46BBF1AD475AE00E6FE48 /* RepoController.h */,
 				CED46BC01AD475AE00E6FE48 /* RepoController.m */,
+				CE838D641B1637640011385B /* TrendingController.h */,
+				CE838D651B1637640011385B /* TrendingController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -130,6 +138,8 @@
 				CE1E9AE61AD32421008BFE0A /* Event.m */,
 				CE1E9AE71AD32421008BFE0A /* Notification.h */,
 				CE1E9AE81AD32421008BFE0A /* Notification.m */,
+				CE838D671B163D0A0011385B /* Repository.h */,
+				CE838D681B163D0A0011385B /* Repository.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -142,12 +152,12 @@
 				CE1E9AEC1AD32421008BFE0A /* GZDefines.h */,
 				CE7A0D631ADC1C36007EB94F /* NSDateFormatter+DK.h */,
 				CE7A0D641ADC1C36007EB94F /* NSDateFormatter+DK.m */,
-				CE7A0D661ADC1D68007EB94F /* UIColor+DK.h */,
-				CE7A0D671ADC1D68007EB94F /* UIColor+DK.m */,
-				CE33E4C91ADEF7ED002C668B /* NSString+GZ.h */,
-				CE33E4CA1ADEF7ED002C668B /* NSString+GZ.m */,
 				CE33E4D71ADF1038002C668B /* NSDictionary+GZ.h */,
 				CE33E4D81ADF1038002C668B /* NSDictionary+GZ.m */,
+				CE33E4C91ADEF7ED002C668B /* NSString+GZ.h */,
+				CE33E4CA1ADEF7ED002C668B /* NSString+GZ.m */,
+				CE7A0D661ADC1D68007EB94F /* UIColor+DK.h */,
+				CE7A0D671ADC1D68007EB94F /* UIColor+DK.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -382,11 +392,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE1E9AF31AD32421008BFE0A /* Api.m in Sources */,
+				CE838D691B163D0A0011385B /* Repository.m in Sources */,
 				CE7A0D651ADC1C36007EB94F /* NSDateFormatter+DK.m in Sources */,
 				CE7A0D681ADC1D68007EB94F /* UIColor+DK.m in Sources */,
 				CED46BC61AD4804600E6FE48 /* CXCountDownLabel.m in Sources */,
 				CE1E9AF11AD32421008BFE0A /* Event.m in Sources */,
 				CE1E9AEF1AD32421008BFE0A /* AppDelegate.m in Sources */,
+				CE838D661B1637640011385B /* TrendingController.m in Sources */,
 				CE1E9AF21AD32421008BFE0A /* Notification.m in Sources */,
 				CED46BC11AD475AE00E6FE48 /* RepoController.m in Sources */,
 				CECE1D521ACEDB880015A2C7 /* main.m in Sources */,
