@@ -8,6 +8,9 @@
 
 #import "Api.h"
 
+// Categories
+#import "NSString+DK.h"
+
 // Models
 #import "Event.h"
 #import "Notification.h"
@@ -158,7 +161,7 @@ NSString *api_url_user = @"https://api.github.com/user";
 - (void)sendAsynchronousRequestWithUrlString:(NSString *)urlString success:(void(^)(id response))success failure:(void(^)(NSError *error))failure {
     NSURL *URL = (self.token) ?
     ({
-        NSString *symbol = ([urlString containsString:@"?"])?@"&":@"?";
+        NSString *symbol = ([urlString dk_containsString:@"?"])?@"&":@"?";
         NSString *urlWithToken = [NSString stringWithFormat:@"%@%@access_token=%@", urlString,
                                   symbol,
                                   self.token

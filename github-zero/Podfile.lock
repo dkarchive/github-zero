@@ -1,5 +1,5 @@
 PODS:
-  - DKCategories (0.1)
+  - DKCategories (0.2)
   - DKDataCache (0.2)
   - GitHubOAuthController (0.1)
   - HexColors (2.2.1)
@@ -12,7 +12,7 @@ PODS:
     - HexColors
 
 DEPENDENCIES:
-  - DKCategories (~> 0.1)
+  - DKCategories (~> 0.2)
   - DKDataCache (~> 0.2)
   - GitHubOAuthController (~> 0.1)
   - Keys (from `Pods/CocoaPodsKeys/`)
@@ -20,14 +20,14 @@ DEPENDENCIES:
   - OcticonsIOS (~> 0.0.2)
   - SloppySwiper (~> 0.4.0)
   - TOWebViewController (~> 2.0)
-  - TSMessages
+  - TSMessages (~> 0.9.2)
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys/
 
 SPEC CHECKSUMS:
-  DKCategories: 4d061e3e1fa53776fdf4f9a754320678055f2286
+  DKCategories: 3546b9cff779a6541e44ba52b56604f731e980fa
   DKDataCache: 9741cef8ba45f25d186734f15bb13949d1c1d274
   GitHubOAuthController: 6d147f984e1ce5863b522ee3fb7a453468102974
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
