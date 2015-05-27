@@ -284,6 +284,7 @@ NS_ENUM(NSInteger, GZSectionType) {
 
 - (void)showWebControllerWithUrlString:(NSString *)urlString {
     TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURLString:urlString];
+    webViewController.showLoadingBar = NO;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
