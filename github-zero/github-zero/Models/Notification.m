@@ -40,9 +40,9 @@
 
 + (Notification *)newNotificationFromResponse:(NSDictionary *)response {
     Notification *notification = [[Notification alloc] init];
-    
-    notification.subject = response[@"subject"];
+
     notification.repository = response[@"repository"];
+    notification.subject = response[@"subject"];
     notification.updatedAt = response[@"updated_at"];
     
     notification.raw = response;
@@ -115,10 +115,13 @@
 }
 
 - (NSString *)url {
+    NSNumber *private = self.repository[@"private"];
+    if (private.integerValue)
+        return nil;
+    
     NSString *temp = self.subject[@"url"];
     temp = [temp stringByReplacingOccurrencesOfString:@"api." withString:@""];
     temp = [temp stringByReplacingOccurrencesOfString:@"repos/" withString:@""];
-    //    NSLog(@"temp = %@", temp);
     
     return temp;
 }
