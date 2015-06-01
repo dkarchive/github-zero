@@ -4,7 +4,8 @@ Simple GitHub app for iOS
 
 ## Getting Started
 
-GitHub Zero uses [Cocoapods](https://cocoapods.org/)
+1. Create a GitHub OAuth application https://github.com/settings/applications/new
+- GitHub Zero uses https://cocoapods.org 
 
 ``` 
 git clone https://github.com/dkhamsing/github-zero.git
