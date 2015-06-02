@@ -26,7 +26,7 @@
 @end
 
 @implementation Notification
-@synthesize avatarUrlString, date, dummy, title, image, repoName, timeAgo, type, url, userUrl;
+@synthesize avatarUrlString, date, destination, dummy, title, image, repoName, timeAgo, type, url, userUrl;
 
 + (NSArray *)newEventsFromResponse:(NSArray *)response {
     NSMutableArray *list = [[NSMutableArray alloc] init];
@@ -63,6 +63,14 @@
 - (NSDate *)date {
     NSDateFormatter *formatter = [NSDateFormatter posix];
     return [formatter dateFromString:self.updatedAt];
+}
+
+- (DestinationType)destination {
+    NSNumber *private = self.repository[@"private"];
+    if (private.integerValue)
+        return DestinationTypePrivate;
+    
+    return DestinationTypeWeb;
 }
 
 - (NSString *)type {
@@ -115,15 +123,11 @@
 }
 
 - (NSString *)url {
-    NSNumber *private = self.repository[@"private"];
-    if (private.integerValue)
-        return nil;
+    NSString *repo = self.subject[@"url"];
+    repo = [repo stringByReplacingOccurrencesOfString:@"api." withString:@""];
+    repo = [repo stringByReplacingOccurrencesOfString:@"repos/" withString:@""];
     
-    NSString *temp = self.subject[@"url"];
-    temp = [temp stringByReplacingOccurrencesOfString:@"api." withString:@""];
-    temp = [temp stringByReplacingOccurrencesOfString:@"repos/" withString:@""];
-    
-    return temp;
+    return repo;
 }
 
 - (NSString *)userUrl {
@@ -183,14 +187,14 @@
 //    //    return nil;
 //}
 
-#pragma mark - Private
-
-- (NSString *)mergeUrlString {
-    return self.subject[@"url"];
-}
-
-- (NSString *)threads {
-    return self.raw[@"url"];
-}
+//#pragma mark - Private
+//
+//- (NSString *)mergeUrlString {
+//    return self.subject[@"url"];
+//}
+//
+//- (NSString *)threads {
+//    return self.raw[@"url"];
+//}
 
 @end

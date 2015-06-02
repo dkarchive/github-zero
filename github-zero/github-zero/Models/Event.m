@@ -28,7 +28,7 @@
 @end
 
 @implementation Event
-@synthesize avatarUrlString, date, dummy, title, image, repoName, timeAgo, type, url, userUrl;
+@synthesize avatarUrlString, date, destination, dummy, title, image, repoName, timeAgo, type, url, userUrl;
 
 + (NSArray *)newEventsFromResponse:(NSArray *)response {
     NSMutableArray *list = [[NSMutableArray alloc] init];
@@ -75,6 +75,13 @@
 - (NSDate *)date {
     NSDateFormatter *formatter = [NSDateFormatter posix];
     return [formatter dateFromString:self.createdAt];
+}
+
+- (DestinationType)destination {
+    if (!self.public.integerValue)
+        return DestinationTypePrivate;
+
+    return DestinationTypeWeb;
 }
 
 - (UIImage *)image {
@@ -254,20 +261,17 @@
 }
 
 - (NSString *)url {
-    if (!self.public.integerValue)
-        return nil;
+    NSString *commentUrl = self.payload[@"comment"][@"html_url"];
+    if (commentUrl)
+        return commentUrl;
     
-    NSString *htmlUrl = self.payload[@"comment"][@"html_url"];
-    if (htmlUrl)
-        return htmlUrl;
-    
-    NSString *destination = [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
+    NSString *repo = [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
         
-    if ([self.type isEqualToString:@"PullRequestEvent"]) {
-        destination = [destination stringByAppendingFormat:@"/pull/%@", self.payload[@"number"]];
+    if ([self.type isEqualToString:@"PullRequestEvent"]) { 
+        return [repo stringByAppendingFormat:@"/pull/%@", self.payload[@"number"]];
     }
     
-    return destination;
+    return repo;
 }
 
 - (NSString *)userUrl {

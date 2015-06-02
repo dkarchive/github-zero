@@ -201,7 +201,7 @@ NS_ENUM(NSInteger, GZSectionType) {
 - (void)addAndAnimateHeaderView {
     self.headerView.alpha = 0;
     self.tableView.tableHeaderView = self.headerView;
-
+    
     [UIView animateWithDuration:gz_headerViewAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.headerView.alpha = 1;
     } completion:nil];
@@ -235,7 +235,7 @@ NS_ENUM(NSInteger, GZSectionType) {
             [self.activityIndicator stopAnimating];
             
             self.notifications = blockNotifications;
-
+            
             if ((blockNotifications.count==0) && (events.count==0)) {
                 events = [Event noEvents];
             }
@@ -376,33 +376,46 @@ NSString *cellId = @"cellId";
     NSArray *list = self.dataSource[indexPath.section];
     id <DataSource> item = list[indexPath.row];
     
-    // private repo
-    if (!item.url) {
-        [TSMessage showNotificationWithTitle:@"Private repos are not supported."
-                                    subtitle:nil
-                                        type:TSMessageNotificationTypeMessage];
-        return;
+    // explicit routing
+    
+    switch (item.destination) {
+        case DestinationTypePrivate: {
+            [TSMessage showNotificationWithTitle:@"Private repos are not supported."
+                                        subtitle:nil
+                                            type:TSMessageNotificationTypeMessage];
+        }
+            break;
+            
+        case DestinationTypeWeb: {
+            [self showWebControllerWithUrlString:item.url];
+            
+            // mark notification as read
+            if ([item isKindOfClass:[Notification class]]) {
+                Notification *notification = (Notification *)item;
+                [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
+                    NSMutableArray *notifications = self.notifications.mutableCopy;
+                    [notifications removeObject:item];
+                    self.notifications = notifications.copy;
+                    self.dataSource = @[
+                                        self.notifications,
+                                        self.events,
+                                        ];
+                    [self.tableView reloadData];
+                } failure:^(NSError *error) {
+                    NSLog(@"mark as read error %@", error);
+                }];
+            }
+            
+        }
+            break;
+            
+        default: {
+            NSLog(@"destination unknown for %@", item);
+        }
+            break;
     }
     
-    [self showWebControllerWithUrlString:item.url];
-
-    // mark notification as read
-    if ([item isKindOfClass:[Notification class]]) {
-        Notification *notification = (Notification *)item;
-        [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
-            NSMutableArray *notifications = self.notifications.mutableCopy;
-            [notifications removeObject:item];
-            self.notifications = notifications.copy;
-            self.dataSource = @[
-                                self.notifications,
-                                self.events,
-                                ];
-            [self.tableView reloadData];
-        } failure:^(NSError *error) {
-            NSLog(@"mark as read error %@", error);
-        }];
-    }
-    
+      
     //    RepoController *repoController = [[RepoController alloc] initWithItem:item];
     //    [self.navigationController pushViewController:repoController animated:YES];
 }

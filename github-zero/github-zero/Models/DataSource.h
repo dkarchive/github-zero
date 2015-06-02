@@ -11,11 +11,21 @@
 // Categories
 #import "NSString+Emojize.h"
 
+typedef NS_ENUM(NSInteger, DestinationType) {
+//    DestinationTypeRepo,
+//    DestinationTypePull,
+    DestinationTypePrivate,
+    DestinationTypeWeb,
+//    DestinationTypeUnknown,
+};
+
 @protocol DataSource <NSObject>
 
 @property (nonatomic, strong) NSString *avatarUrlString;
 
 @property (nonatomic, strong) NSDate *date;
+
+@property (nonatomic) DestinationType destination;
 
 @property (nonatomic, strong) NSAttributedString *title;
 
