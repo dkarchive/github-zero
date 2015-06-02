@@ -27,10 +27,13 @@
 
 @property (nonatomic, strong) NSString *type;
 
-@property (nonatomic, strong) NSString *url; //TODO: rename repoUrl;
+@property (nonatomic, strong) NSString *url;
 
 @property (nonatomic, strong) NSString *userUrl;
 
+/**
+ Property to use in dummy events (no events).
+ */
 @property (nonatomic) BOOL dummy;
 
 + (NSArray *)newEventsFromResponse:(NSArray *)response;

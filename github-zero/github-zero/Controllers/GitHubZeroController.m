@@ -376,32 +376,31 @@ NSString *cellId = @"cellId";
     NSArray *list = self.dataSource[indexPath.section];
     id <DataSource> item = list[indexPath.row];
     
-    NSString *destination = @"repo";
-    if ([destination isEqualToString:@"repo"]) {
-        if (!item.url) {
-            [TSMessage showNotificationWithTitle:@"Private repos are not supported."
-                                        subtitle:nil
-                                            type:TSMessageNotificationTypeMessage];
-            return;
-        }
-                
-        [self showWebControllerWithUrlString:item.url];
-        
-        if ([item isKindOfClass:[Notification class]]) {
-            Notification *notification = (Notification *)item;
-            [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {                
-                NSMutableArray *notifications = self.notifications.mutableCopy;
-                [notifications removeObject:item];
-                self.notifications = notifications.copy;
-                self.dataSource = @[
-                                    self.notifications,
-                                    self.events,
-                                    ];
-                [self.tableView reloadData];
-            } failure:^(NSError *error) {
-                NSLog(@"mark as read error %@", error);
-            }];
-        }
+    // private repo
+    if (!item.url) {
+        [TSMessage showNotificationWithTitle:@"Private repos are not supported."
+                                    subtitle:nil
+                                        type:TSMessageNotificationTypeMessage];
+        return;
+    }
+    
+    [self showWebControllerWithUrlString:item.url];
+
+    // mark notification as read
+    if ([item isKindOfClass:[Notification class]]) {
+        Notification *notification = (Notification *)item;
+        [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
+            NSMutableArray *notifications = self.notifications.mutableCopy;
+            [notifications removeObject:item];
+            self.notifications = notifications.copy;
+            self.dataSource = @[
+                                self.notifications,
+                                self.events,
+                                ];
+            [self.tableView reloadData];
+        } failure:^(NSError *error) {
+            NSLog(@"mark as read error %@", error);
+        }];
     }
     
     //    RepoController *repoController = [[RepoController alloc] initWithItem:item];
