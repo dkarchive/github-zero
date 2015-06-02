@@ -262,6 +262,10 @@
         return htmlUrl;
     
     NSString *destination = [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
+        
+    if ([self.type isEqualToString:@"PullRequestEvent"]) {
+        destination = [destination stringByAppendingFormat:@"/pull/%@", self.payload[@"number"]];
+    }
     
     return destination;
 }
