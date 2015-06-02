@@ -24,8 +24,12 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    id appearance = [UINavigationBar appearance];
+    
+    [appearance setTintColor:[UIColor grayColor]];
+    
     NSDictionary *attributes = @{ NSFontAttributeName : [UIFont fontWithName:gzFont size:18] };
-    [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    [appearance setTitleTextAttributes:attributes];
     
     NSDictionary *attributes2 = @{ NSFontAttributeName : [UIFont fontWithName:gzFont size:14],
                                    NSForegroundColorAttributeName : [UIColor grayColor],
