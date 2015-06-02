@@ -154,11 +154,13 @@
         }
     }
     
-    if ([self.type isEqualToString:@"PullRequestEvent"]) {
-        NSNumber *merge = self.payload[@"pull_request"][@"merged"];
+    if ([self.type isEqualToString:@"PullRequestEvent"]) {        
         temp = [NSString stringWithFormat:@"%@ %@ %@ (#%@ pull request)",
                 self.actor[@"login"],
-                merge.integerValue ? @"merged" : @"opened",
+                ({
+            NSNumber *merge = self.payload[@"pull_request"][@"merged"];
+            merge.integerValue ? @"merged" : self.payload[@"action"];
+        }),
                 self.payload[@"pull_request"][@"title"],
                 self.payload[@"number"]
         ];
