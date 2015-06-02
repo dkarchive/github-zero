@@ -10,5 +10,7 @@
 
 @interface GitHubZeroController : UITableViewController
 
+- (void)getData;
+
 @end
 

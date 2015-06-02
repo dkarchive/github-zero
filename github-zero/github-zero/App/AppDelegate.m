@@ -19,11 +19,52 @@
 
 @interface AppDelegate () <UINavigationControllerDelegate>
 @property (nonatomic, strong) SloppySwiper *swiper;
+@property (nonatomic, strong) GitHubZeroController *zeroController;
+@property (nonatomic) BOOL launched;
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self applyStyle];
+    
+    self.launched = YES;
+    
+    UIScreen *screen = [UIScreen mainScreen];
+    
+    self.window = [[UIWindow alloc] initWithFrame:screen.bounds];
+    
+    self.zeroController = [[GitHubZeroController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.zeroController];
+    self.swiper = [[SloppySwiper alloc] initWithNavigationController:navigationController];
+    navigationController.delegate = self.swiper;
+    
+    self.window.rootViewController = navigationController;
+    
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    if (self.launched) {
+        self.launched = NO;
+        return;
+    }
+    
+    // check for last update and initiate refresh
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:ud_LastUpdate];
+    NSTimeInterval seconds = [date timeIntervalSinceNow];
+    NSInteger minutes = fabs(seconds) / 60;
+    if (minutes>4) {
+        [self.zeroController getData];
+    }
+}
+
+#pragma mark - Private
+
+- (void)applyStyle {
     id appearance = [UINavigationBar appearance];
     
     [appearance setTintColor:[UIColor grayColor]];
@@ -35,22 +76,6 @@
                                    NSForegroundColorAttributeName : [UIColor grayColor],
                                    };
     [[UIBarButtonItem appearance] setTitleTextAttributes:attributes2 forState:UIControlStateNormal];
-    
-    UIScreen *screen = [UIScreen mainScreen];
-    
-    self.window = [[UIWindow alloc] initWithFrame:screen.bounds];
-    
-    GitHubZeroController *viewController = [[GitHubZeroController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    self.swiper = [[SloppySwiper alloc] initWithNavigationController:navigationController];
-    navigationController.delegate = self.swiper;
-    
-    self.window.rootViewController = navigationController;
-    
-    [self.window makeKeyAndVisible];
-    
-    return YES;
 }
 
 @end

@@ -60,7 +60,6 @@ NSString *oAuthScope = @"user notifications repo";
 
 NSString *ud_AccessToken = @"ud_AccessToken";
 NSString *ud_UserName = @"ud_UserName";
-NSString *ud_LastUpdate = @"ud_LastUpdate";
 
 NSInteger gz_eventsPageSize = 30;
 NSInteger gz_rowHeight = 60;
