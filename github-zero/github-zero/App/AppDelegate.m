@@ -30,19 +30,20 @@
     
     self.launched = YES;
     
-    UIScreen *screen = [UIScreen mainScreen];
+    UINavigationController *navigationController = ({
+        self.zeroController = [[GitHubZeroController alloc] initWithStyle:UITableViewStyleGrouped];
+        [[UINavigationController alloc] initWithRootViewController:self.zeroController];
+    });
     
-    self.window = [[UIWindow alloc] initWithFrame:screen.bounds];
+    self.window = ({
+        UIScreen *screen = [UIScreen mainScreen];
+        [[UIWindow alloc] initWithFrame:screen.bounds];
+    });
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
     
-    self.zeroController = [[GitHubZeroController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.zeroController];
     self.swiper = [[SloppySwiper alloc] initWithNavigationController:navigationController];
     navigationController.delegate = self.swiper;
-    
-    self.window.rootViewController = navigationController;
-    
-    [self.window makeKeyAndVisible];
     
     return YES;
 }
