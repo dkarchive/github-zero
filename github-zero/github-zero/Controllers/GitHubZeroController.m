@@ -129,6 +129,8 @@ NS_ENUM(NSInteger, GZSectionType) {
         [self setupRefreshControl];
     }
     else {
+        self.title = @"";
+        
         self.navigationItem.rightBarButtonItem = self.signinButton;
         
         [self actionTrending];
