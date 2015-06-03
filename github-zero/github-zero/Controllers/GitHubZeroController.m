@@ -381,9 +381,7 @@ NSString *cellId = @"cellId";
     
     switch (item.destination) {
         case DestinationTypePrivate: {
-            [TSMessage showNotificationWithTitle:@"Private repos are not supported."
-                                        subtitle:nil
-                                            type:TSMessageNotificationTypeMessage];
+            [TSMessage showNotificationWithTitle:@"Private repos are not supported." type:TSMessageNotificationTypeMessage];
         }
             break;
             
