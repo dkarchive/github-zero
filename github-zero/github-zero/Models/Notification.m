@@ -187,14 +187,15 @@
 //    //    return nil;
 //}
 
-//#pragma mark - Private
+#pragma mark - Private
 //
 //- (NSString *)mergeUrlString {
 //    return self.subject[@"url"];
 //}
 //
-//- (NSString *)threads {
-//    return self.raw[@"url"];
-//}
+
+- (NSString *)threads {
+    return self.raw[@"url"];
+}
 
 @end
