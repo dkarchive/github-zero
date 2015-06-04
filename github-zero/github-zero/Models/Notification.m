@@ -111,6 +111,10 @@
         icon = @"IssueOpened";
     }
     
+    if ([self.type isEqualToString:@"Commit"]) {
+        icon = @"GitCommit";
+    }
+    
     UIColor *iconColor = [UIColor grayColor];
     
     if (icon)
