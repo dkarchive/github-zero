@@ -261,10 +261,17 @@
 }
 
 - (NSString *)url {
+    // comment
     NSString *commentUrl = self.payload[@"comment"][@"html_url"];
     if (commentUrl)
         return commentUrl;
     
+    // issue
+    NSString *issueUrl = self.payload[@"issue"][@"url"];
+    if (issueUrl)
+        return [issueUrl convertApiUrl];
+    
+    // other
     NSString *repo = [NSString stringWithFormat:@"https://github.com/%@", self.repo[@"name"]];
         
     if ([self.type isEqualToString:@"PullRequestEvent"]) { 

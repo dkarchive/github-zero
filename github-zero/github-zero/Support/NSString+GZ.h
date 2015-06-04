@@ -10,6 +10,8 @@
 
 @interface NSString (GZ)
 
+- (NSString *)convertApiUrl;
+
 + (NSString *)timeAgoForString:(NSString *)string;
 
 @end

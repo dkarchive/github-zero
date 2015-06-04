@@ -11,6 +11,13 @@
 
 @implementation NSString (GZ)
 
+- (NSString *)convertApiUrl{
+    NSString *temp = self;
+    temp = [temp stringByReplacingOccurrencesOfString:@"api." withString:@""];
+    temp = [temp stringByReplacingOccurrencesOfString:@"/repos" withString:@""];
+    return temp;
+}
+
 + (NSString *)timeAgoForString:(NSString *)string {
     NSDateFormatter *formatter = [NSDateFormatter posix];
     

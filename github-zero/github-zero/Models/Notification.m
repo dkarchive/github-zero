@@ -123,11 +123,8 @@
 }
 
 - (NSString *)url {
-    NSString *repo = self.subject[@"url"];
-    repo = [repo stringByReplacingOccurrencesOfString:@"api." withString:@""];
-    repo = [repo stringByReplacingOccurrencesOfString:@"repos/" withString:@""];
-    
-    return repo;
+    NSString *repo = self.subject[@"url"];    
+    return [repo convertApiUrl];
 }
 
 - (NSString *)userUrl {
