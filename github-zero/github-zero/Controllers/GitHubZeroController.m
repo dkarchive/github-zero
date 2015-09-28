@@ -388,23 +388,23 @@ NSString *cellId = @"cellId";
         case DestinationTypeWeb: {
             [self showWebControllerWithUrlString:item.url];
             
-            // mark notification as read
-            if ([item isKindOfClass:[Notification class]]) {
-                Notification *notification = (Notification *)item;
-                [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
-                    NSMutableArray *notifications = self.notifications.mutableCopy;
-                    [notifications removeObject:item];
-                    self.notifications = notifications.copy;
-                    self.dataSource = @[
-                                        self.notifications,
-                                        self.events,
-                                        ];
-                    [self.tableView reloadData];
-                } failure:^(NSError *error) {
-                    NSLog(@"mark as read error %@", error);
-                }];
-            }
-            
+//            return;
+//            // mark notification as read
+//            if ([item isKindOfClass:[Notification class]]) {
+//                Notification *notification = (Notification *)item;
+//                [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
+//                    NSMutableArray *notifications = self.notifications.mutableCopy;
+//                    [notifications removeObject:item];
+//                    self.notifications = notifications.copy;
+//                    self.dataSource = @[
+//                                        self.notifications,
+//                                        self.events,
+//                                        ];
+//                    [self.tableView reloadData];
+//                } failure:^(NSError *error) {
+//                    NSLog(@"mark as read error %@", error);
+//                }];
+//            }            
         }
             break;
             
