@@ -159,7 +159,7 @@ NS_ENUM(NSInteger, GZSectionType) {
 }
 
 - (void)actionSignin {
-    GithubZeroKeys *keys = [[GithubZeroKeys alloc] init];
+    GithubzeroKeys *keys = [[GithubzeroKeys alloc] init];
     NSString *kClientId = keys.gitHubAPIClientID;
     NSString *kClientSecret = keys.gitHubAPIClientSecret;
     

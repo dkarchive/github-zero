@@ -6,16 +6,16 @@ PODS:
   - Keys (1.0.0)
   - NSStringEmojize (0.2.0)
   - OcticonsIOS (0.0.2)
-  - SloppySwiper (0.4.0)
-  - TOWebViewController (2.0.14)
+  - SloppySwiper (0.4.1)
+  - TOWebViewController (2.0.19)
   - TSMessages (0.9.12):
-    - HexColors
+    - HexColors (~> 2.2.0)
 
 DEPENDENCIES:
   - DKCategories (~> 0.2)
   - DKDataCache (~> 0.2)
   - GitHubOAuthController (~> 0.1)
-  - Keys (from `Pods/CocoaPodsKeys/`)
+  - Keys (from `Pods/CocoaPodsKeys`)
   - NSStringEmojize (~> 0.2)
   - OcticonsIOS (~> 0.0.2)
   - SloppySwiper (~> 0.4.0)
@@ -24,7 +24,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Keys:
-    :path: Pods/CocoaPodsKeys/
+    :path: Pods/CocoaPodsKeys
 
 SPEC CHECKSUMS:
   DKCategories: 3546b9cff779a6541e44ba52b56604f731e980fa
@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   Keys: 7d2ff6ff42f6903358267ce56e9392f83c31acfe
   NSStringEmojize: bd60199a25d745365b393fb95a2c6471bb9a2e99
   OcticonsIOS: 845ce2794c2837cf688049c4782467ef0c3c949d
-  SloppySwiper: 5325a412ecd80eefa171f5544b07539a891b1c32
-  TOWebViewController: 2cfd0032d781cabd88a0995fbca9692c11f0797e
-  TSMessages: 2a52642128d7ab15b46930c810b9c9403a2b58f3
+  SloppySwiper: 9518b65478d92b8ea9ffd283c1ce3e5d123bf3a9
+  TOWebViewController: accd62ec0acc8d5c2e1e195c6f7ff7654c3c840c
+  TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2
