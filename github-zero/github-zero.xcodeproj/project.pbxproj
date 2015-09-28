@@ -21,21 +21,10 @@
 		CE838D691B163D0A0011385B /* Repository.m in Sources */ = {isa = PBXBuildFile; fileRef = CE838D681B163D0A0011385B /* Repository.m */; };
 		CECE1D521ACEDB880015A2C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE1D511ACEDB880015A2C7 /* main.m */; };
 		CECE1D5D1ACEDB880015A2C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CECE1D5C1ACEDB880015A2C7 /* Images.xcassets */; };
-		CECE1D6C1ACEDB880015A2C7 /* github_zeroTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CECE1D6B1ACEDB880015A2C7 /* github_zeroTests.m */; };
 		CED46BC11AD475AE00E6FE48 /* RepoController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED46BC01AD475AE00E6FE48 /* RepoController.m */; };
 		CED46BC61AD4804600E6FE48 /* CXCountDownLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CED46BC51AD4804600E6FE48 /* CXCountDownLabel.m */; };
 		F4936211B53DD178D67198FC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8DA3875D1E4173B3F941213 /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		CECE1D661ACEDB880015A2C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CECE1D441ACEDB880015A2C7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CECE1D4B1ACEDB880015A2C7;
-			remoteInfo = "github-zero";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		35D6E8F38F45E27D2B249EF8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -70,7 +59,6 @@
 		CECE1D501ACEDB880015A2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CECE1D511ACEDB880015A2C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CECE1D5C1ACEDB880015A2C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		CECE1D651ACEDB880015A2C7 /* github-zeroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "github-zeroTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECE1D6A1ACEDB880015A2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CECE1D6B1ACEDB880015A2C7 /* github_zeroTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = github_zeroTests.m; sourceTree = "<group>"; };
 		CED46BBF1AD475AE00E6FE48 /* RepoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepoController.h; sourceTree = "<group>"; };
@@ -86,13 +74,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4936211B53DD178D67198FC /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CECE1D621ACEDB880015A2C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				CECE1D4C1ACEDB880015A2C7 /* github-zero.app */,
-				CECE1D651ACEDB880015A2C7 /* github-zeroTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,40 +259,18 @@
 			productReference = CECE1D4C1ACEDB880015A2C7 /* github-zero.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CECE1D641ACEDB880015A2C7 /* github-zeroTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CECE1D721ACEDB880015A2C7 /* Build configuration list for PBXNativeTarget "github-zeroTests" */;
-			buildPhases = (
-				CECE1D611ACEDB880015A2C7 /* Sources */,
-				CECE1D621ACEDB880015A2C7 /* Frameworks */,
-				CECE1D631ACEDB880015A2C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CECE1D671ACEDB880015A2C7 /* PBXTargetDependency */,
-			);
-			name = "github-zeroTests";
-			productName = "github-zeroTests";
-			productReference = CECE1D651ACEDB880015A2C7 /* github-zeroTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		CECE1D441ACEDB880015A2C7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = dkhamsing;
 				TargetAttributes = {
 					CECE1D4B1ACEDB880015A2C7 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = X522JJ58HA;
-					};
-					CECE1D641ACEDB880015A2C7 = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = CECE1D4B1ACEDB880015A2C7;
 					};
 				};
 			};
@@ -330,7 +288,6 @@
 			projectRoot = "";
 			targets = (
 				CECE1D4B1ACEDB880015A2C7 /* github-zero */,
-				CECE1D641ACEDB880015A2C7 /* github-zeroTests */,
 			);
 		};
 /* End PBXProject section */
@@ -341,13 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CECE1D5D1ACEDB880015A2C7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CECE1D631ACEDB880015A2C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,23 +359,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CECE1D611ACEDB880015A2C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CECE1D6C1ACEDB880015A2C7 /* github_zeroTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CECE1D671ACEDB880015A2C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CECE1D4B1ACEDB880015A2C7 /* github-zero */;
-			targetProxy = CECE1D661ACEDB880015A2C7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CECE1D6D1ACEDB880015A2C7 /* Debug */ = {
@@ -448,6 +382,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -513,6 +448,7 @@
 				INFOPLIST_FILE = "github-zero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dkhamsing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -526,41 +462,8 @@
 				INFOPLIST_FILE = "github-zero/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dkhamsing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		CECE1D731ACEDB880015A2C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "github-zeroTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/github-zero.app/github-zero";
-			};
-			name = Debug;
-		};
-		CECE1D741ACEDB880015A2C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "github-zeroTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/github-zero.app/github-zero";
 			};
 			name = Release;
 		};
@@ -581,15 +484,6 @@
 			buildConfigurations = (
 				CECE1D701ACEDB880015A2C7 /* Debug */,
 				CECE1D711ACEDB880015A2C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CECE1D721ACEDB880015A2C7 /* Build configuration list for PBXNativeTarget "github-zeroTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CECE1D731ACEDB880015A2C7 /* Debug */,
-				CECE1D741ACEDB880015A2C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
