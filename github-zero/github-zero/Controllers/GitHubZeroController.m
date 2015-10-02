@@ -37,7 +37,7 @@
 // Views
 #import "GZCell.h"
 
-@interface GitHubZeroController () <UIActionSheetDelegate>
+@interface GitHubZeroController ()
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSString *userName;
 
@@ -192,8 +192,33 @@ NS_ENUM(NSInteger, GZSectionType) {
 }
 
 - (void)actionSignout {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:gz_signoutText otherButtonTitles: nil];
-    [sheet showInView:self.view];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:gz_signoutText style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self clearData];
+            
+            self.refreshControl = nil;
+            
+            [self addAndAnimateHeaderView];
+            
+            self.navigationItem.rightBarButtonItem = self.signinButton;
+            
+            //clear user default keys
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults removeObjectForKey:ud_AccessToken];
+            [defaults removeObjectForKey:ud_UserName];
+            [defaults synchronize];
+        }];
+        [alertController addAction:action];
+    }
+    
+    {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:action];
+    }
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)actionTrending {
@@ -389,23 +414,23 @@ NSString *cellId = @"cellId";
         case DestinationTypeWeb: {
             [self showWebControllerWithUrlString:item.url];
             
-//            return;
-//            // mark notification as read
-//            if ([item isKindOfClass:[Notification class]]) {
-//                Notification *notification = (Notification *)item;
-//                [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
-//                    NSMutableArray *notifications = self.notifications.mutableCopy;
-//                    [notifications removeObject:item];
-//                    self.notifications = notifications.copy;
-//                    self.dataSource = @[
-//                                        self.notifications,
-//                                        self.events,
-//                                        ];
-//                    [self.tableView reloadData];
-//                } failure:^(NSError *error) {
-//                    NSLog(@"mark as read error %@", error);
-//                }];
-//            }            
+            //            return;
+            //            // mark notification as read
+            //            if ([item isKindOfClass:[Notification class]]) {
+            //                Notification *notification = (Notification *)item;
+            //                [[Api sharedInstance] markNotificationAsReadWithThreadsUrl:notification.threads success:^(BOOL status) {
+            //                    NSMutableArray *notifications = self.notifications.mutableCopy;
+            //                    [notifications removeObject:item];
+            //                    self.notifications = notifications.copy;
+            //                    self.dataSource = @[
+            //                                        self.notifications,
+            //                                        self.events,
+            //                                        ];
+            //                    [self.tableView reloadData];
+            //                } failure:^(NSError *error) {
+            //                    NSLog(@"mark as read error %@", error);
+            //                }];
+            //            }
         }
             break;
             
@@ -415,7 +440,7 @@ NSString *cellId = @"cellId";
             break;
     }
     
-      
+    
     //    RepoController *repoController = [[RepoController alloc] initWithItem:item];
     //    [self.navigationController pushViewController:repoController animated:YES];
 }
@@ -428,25 +453,5 @@ NSString *cellId = @"cellId";
 //
 //    return rowHeight;
 //}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex==0) {
-        [self clearData];
-        
-        self.refreshControl = nil;
-        
-        [self addAndAnimateHeaderView];
-        
-        self.navigationItem.rightBarButtonItem = self.signinButton;
-        
-        //clear user default keys
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults removeObjectForKey:ud_AccessToken];
-        [defaults removeObjectForKey:ud_UserName];
-        [defaults synchronize];
-    }
-}
 
 @end
