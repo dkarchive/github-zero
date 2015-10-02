@@ -1,7 +1,7 @@
 PODS:
   - DKCategories (0.2)
   - DKDataCache (0.2)
-  - GitHubOAuthController (0.1)
+  - GitHubOAuthController (0.2.2)
   - HexColors (2.2.1)
   - Keys (1.0.0)
   - NSStringEmojize (0.2.0)
@@ -13,7 +13,7 @@ PODS:
 DEPENDENCIES:
   - DKCategories (~> 0.2)
   - DKDataCache (~> 0.2)
-  - GitHubOAuthController (~> 0.1)
+  - GitHubOAuthController (~> 0.2)
   - Keys (from `Pods/CocoaPodsKeys`)
   - NSStringEmojize (~> 0.2)
   - OcticonsIOS (~> 0.0.2)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DKCategories: 3546b9cff779a6541e44ba52b56604f731e980fa
   DKDataCache: 9741cef8ba45f25d186734f15bb13949d1c1d274
-  GitHubOAuthController: 6d147f984e1ce5863b522ee3fb7a453468102974
+  GitHubOAuthController: d55597cabc1be911f207492f58f8ac7c31304352
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   Keys: 7d2ff6ff42f6903358267ce56e9392f83c31acfe
   NSStringEmojize: bd60199a25d745365b393fb95a2c6471bb9a2e99

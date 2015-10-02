@@ -1,9 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 pod 'DKCategories', '~> 0.2'
 pod 'DKDataCache', '~> 0.2'
-pod 'GitHubOAuthController', '~> 0.1'
+pod 'GitHubOAuthController', '~> 0.2'
 pod 'NSStringEmojize','~> 0.2'
 pod 'OcticonsIOS', '~> 0.0.2'
 pod 'SloppySwiper', '~> 0.4.0'

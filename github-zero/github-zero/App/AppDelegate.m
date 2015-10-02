@@ -8,13 +8,17 @@
 
 #import "AppDelegate.h"
 
+// Api
+#import "Api.h"
+
+// Constants
+#import "GZDefines.h"
+
 // Controllers
 #import "GitHubZeroController.h"
 
-// Defines
-#import "GZDefines.h"
-
 // Libraries
+#import "GitHubOAuthController.h"
 #import "SloppySwiper.h"
 
 @interface AppDelegate () <UINavigationControllerDelegate>
@@ -61,6 +65,30 @@
     if (minutes>4) {
         [self.zeroController getData];
     }
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    NSString *source = options[UIApplicationOpenURLOptionsSourceApplicationKey];
+    if ([source isEqualToString:gh_safariViewService]) {                
+        [[GitHubOAuthController sharedInstance] exchangeCodeForAccessTokenInUrl:url success:^(NSString *accessToken, NSDictionary *raw) {
+            [[Api sharedInstance] initWithToken:accessToken];
+            
+            [[Api sharedInstance] getUserWithSuccess:^(NSString *username, NSDictionary *raw) {
+                // save token and username
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:accessToken forKey:ud_AccessToken];
+                [defaults setObject:username forKey:ud_UserName];
+                [defaults synchronize];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCloseSafariViewController object:username];
+            } failure:nil];
+            
+        } failure:nil];
+        
+        return YES;
+    };
+    
+    return NO;
 }
 
 #pragma mark - Private

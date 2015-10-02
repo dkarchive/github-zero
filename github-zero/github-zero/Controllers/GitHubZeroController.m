@@ -53,6 +53,8 @@
 @property (nonatomic, strong) UIBarButtonItem *signoutButton;
 
 @property (nonatomic, strong) UIView *headerView;
+
+@property (nonatomic, strong) SFSafariViewController *safariViewController;
 @end
 
 @implementation GitHubZeroController
@@ -60,8 +62,6 @@
 NSString *oAuthProvider = @"github-web";
 NSString *oAuthScope = @"user notifications repo";
 
-NSString *ud_AccessToken = @"ud_AccessToken";
-NSString *ud_UserName = @"ud_UserName";
 
 NSInteger gz_eventsPageSize = 30;
 NSInteger gz_rowHeight = 60;
@@ -73,6 +73,10 @@ NS_ENUM(NSInteger, GZSectionType) {
     GZSectionTypeEvent,
     GZSectionTypeCount,
 };
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,6 +96,8 @@ NS_ENUM(NSInteger, GZSectionType) {
     [self addAndAnimateHeaderView];
     [self.headerView addSubview:githubButton];
     self.navigationItem.leftBarButtonItem = trendingButton;
+    
+    self.title = @"GitHub Zero";
     
     self.page = 1;
     
@@ -136,115 +142,11 @@ NS_ENUM(NSInteger, GZSectionType) {
         
         [self actionTrending];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
-    self.title = @"GitHub Zero";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveCloseSafariNotification:) name:kCloseSafariViewController object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    self.title = @"";
-    
-    [super viewWillDisappear:animated];
-}
-
-#pragma mark - Private
-
-- (void)actionAvatar:(id)sender {
-    GZCell *cell = [sender dk_firstSuperviewOfClass:[GZCell class]];
-    NSString *url = cell.item.userUrl;
-    if (url) {
-        [self showWebControllerWithUrlString:url];
-    }
-}
-
-- (void)actionSignin {
-    GithubzeroKeys *keys = [[GithubzeroKeys alloc] init];
-    NSString *kClientId = keys.gitHubAPIClientID;
-    NSString *kClientSecret = keys.gitHubAPIClientSecret;
-    
-    GitHubOAuthController *oAuthController = [[GitHubOAuthController alloc] initWithClientId:kClientId clientSecret:kClientSecret scope:@"user notifications repo" success:^(NSString *accessToken, NSDictionary *raw) {
-        self.navigationItem.rightBarButtonItem = nil;
-        self.navigationItem.rightBarButtonItem = self.signoutButton;
-        
-        self.accessToken = accessToken;
-        
-        [[Api sharedInstance] initWithToken:self.accessToken];
-        
-        [[Api sharedInstance] getUserWithSuccess:^(NSString *username, NSDictionary *raw) {
-            self.userName = username;
-            
-            // save token and username
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:self.accessToken forKey:ud_AccessToken];
-            [defaults setObject:self.userName forKey:ud_UserName];
-            [defaults synchronize];
-            
-            [self getData];
-            
-            [self setupRefreshControl];
-        } failure:nil];
-    } failure:nil];
-    
-    [oAuthController showModalFromController:self];
-}
-
-- (void)actionSignout {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    {
-        UIAlertAction *action = [UIAlertAction actionWithTitle:gz_signoutText style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            [self clearData];
-            
-            self.refreshControl = nil;
-            
-            [self addAndAnimateHeaderView];
-            
-            self.navigationItem.rightBarButtonItem = self.signinButton;
-            
-            //clear user default keys
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults removeObjectForKey:ud_AccessToken];
-            [defaults removeObjectForKey:ud_UserName];
-            [defaults synchronize];
-        }];
-        [alertController addAction:action];
-    }
-    
-    {
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:action];
-    }
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
-- (void)actionTrending {
-    TrendingController *trendController = [[TrendingController alloc] init];
-    [self.navigationController pushViewController:trendController animated:YES];
-}
-
-- (void)addAndAnimateHeaderView {
-    self.headerView.alpha = 0;
-    self.tableView.tableHeaderView = self.headerView;
-    
-    [UIView animateWithDuration:gz_headerViewAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.headerView.alpha = 1;
-    } completion:nil];
-}
-
-- (void)clearData {
-    self.page = 1;
-    self.events = @[];
-    self.notifications = @[];
-    self.dataSource = @[
-                        self.notifications,
-                        self.events,
-                        ];
-    [self.tableView reloadData];
-}
+#pragma mark - Public
 
 - (void)getData {
     [self clearData];
@@ -295,6 +197,90 @@ NS_ENUM(NSInteger, GZSectionType) {
     [self.refreshControl endRefreshing];
 }
 
+#pragma mark - Private
+
+- (void)actionAvatar:(id)sender {
+    GZCell *cell = [sender dk_firstSuperviewOfClass:[GZCell class]];
+    NSString *url = cell.item.userUrl;
+    if (url) {
+        [self showWebControllerWithUrlString:url];
+    }
+}
+
+- (void)actionSignin {
+    GithubzeroKeys *keys = [[GithubzeroKeys alloc] init];
+    NSString *kClientId = keys.gitHubAPIClientID;
+    NSString *kClientSecret = keys.gitHubAPIClientSecret;
+    NSString *kRedirectUri = @"githubzero://token";
+    NSString *kScope = @"user notifications repo";
+    
+    [[GitHubOAuthController sharedInstance] configureForSafariViewControllerWithClientId:kClientId clientSecret:kClientSecret redirectUri:kRedirectUri scope:kScope];
+    
+    NSURL *authUrl = [GitHubOAuthController sharedInstance].authUrl;
+    self.safariViewController = [[SFSafariViewController alloc] initWithURL:authUrl entersReaderIfAvailable:NO];
+    
+    [self presentViewController:self.safariViewController animated:YES completion:nil];
+}
+
+- (void)actionSignout {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:gz_signoutText style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self clearData];
+            
+            self.refreshControl = nil;
+            
+            [self addAndAnimateHeaderView];
+            
+            self.navigationItem.rightBarButtonItem = self.signinButton;
+            
+            //clear user default keys
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults removeObjectForKey:ud_AccessToken];
+            [defaults removeObjectForKey:ud_UserName];
+            [defaults synchronize];
+            
+            NSString *urlString = @"https://github.com/logout";
+            self.safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString] entersReaderIfAvailable:NO];
+            [self presentViewController:self.safariViewController animated:YES completion:nil];
+        }];
+        [alertController addAction:action];
+    }
+    
+    {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:action];
+    }
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)actionTrending {
+    TrendingController *trendController = [[TrendingController alloc] init];
+    [self.navigationController pushViewController:trendController animated:YES];
+}
+
+- (void)addAndAnimateHeaderView {
+    self.headerView.alpha = 0;
+    self.tableView.tableHeaderView = self.headerView;
+    
+    [UIView animateWithDuration:gz_headerViewAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.headerView.alpha = 1;
+    } completion:nil];
+}
+
+- (void)clearData {
+    self.page = 1;
+    self.events = @[];
+    self.notifications = @[];
+    self.dataSource = @[
+                        self.notifications,
+                        self.events,
+                        ];
+    [self.tableView reloadData];
+}
+
 - (void)getEventsForPage:(NSInteger)page {
     [[Api sharedInstance] getEventsForUsername:self.userName page:self.page success:^(NSArray *events) {
         
@@ -320,9 +306,24 @@ NS_ENUM(NSInteger, GZSectionType) {
     }];
 }
 
+- (void)receiveCloseSafariNotification:(NSNotification *)notification {
+    self.userName = notification.object;
+
+    self.tableView.tableHeaderView = nil;
+    
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = self.signoutButton;
+
+    [self.safariViewController dismissViewControllerAnimated:YES completion:^{
+        [self getData];
+        
+        [self setupRefreshControl];
+    }];
+}
+
 - (void)showWebControllerWithUrlString:(NSString *)urlString {
-    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString] entersReaderIfAvailable:NO];
-    [self presentViewController:safariViewController animated:YES completion:nil];
+    self.safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString] entersReaderIfAvailable:NO];
+    [self presentViewController:self.safariViewController animated:YES completion:nil];
 }
 
 - (void)setupRefreshControl {
