@@ -22,10 +22,12 @@
 // Defines
 #import "GZDefines.h"
 
+// Frameworks
+@import SafariServices;
+
 // Libs
 #import "GitHubOAuthController.h"
 #import "GithubZeroKeys.h"
-#import "TOWebViewController.h"
 #import "TSMessage.h"
 
 // Models
@@ -294,9 +296,8 @@ NS_ENUM(NSInteger, GZSectionType) {
 }
 
 - (void)showWebControllerWithUrlString:(NSString *)urlString {
-    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURLString:urlString];
-    webViewController.showLoadingBar = NO;
-    [self.navigationController pushViewController:webViewController animated:YES];
+    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString] entersReaderIfAvailable:NO];
+    [self presentViewController:safariViewController animated:YES completion:nil];
 }
 
 - (void)setupRefreshControl {

@@ -20,9 +20,11 @@
 // Models
 #import "Repository.h"
 
+// Frameworks
+@import SafariServices;
+
 // Libraries
 #import "DKDataCache.h"
-#import "TOWebViewController.h"
 
 @interface TrendingCell : UITableViewCell
 @property (nonatomic, strong) UILabel *repoLabel;
@@ -131,12 +133,12 @@ NSString *repoData = @"repoData";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Repository *repo = self.dataSource[indexPath.row];
-    NSString *urlString = repo.url;
-    
-    TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURLString:urlString];
-    webViewController.showLoadingBar = NO;
-    [self.navigationController pushViewController:webViewController animated:YES];
+    SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:({
+        Repository *repo = self.dataSource[indexPath.row];
+        NSString *urlString = repo.url;
+        [NSURL URLWithString:urlString];
+    }) entersReaderIfAvailable:NO];
+    [self presentViewController:safariViewController animated:YES completion:nil];
 }
 
 @end
